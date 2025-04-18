@@ -1,8 +1,3 @@
-<file name=server.py path=/Users/ericguerrize/html-boilerplate/qrcode/server.py >
-import os
-
-TWILIO_SID = os.environ.get('TWILIO_SID')
-TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')
-TWILIO_PHONE = os.environ.get('TWILIO_PHONE')
-MEU_NUMERO = os.environ.get('MEU_NUMERO')
-</file>
+flask
+twilio
+flask-cors
