@@ -3,6 +3,12 @@ from twilio.rest import Client
 from flask_cors import CORS
 
 app = Flask(__name__)
+from flask import send_from_directory
+import os
+
+@app.route('/<path:nome_arquivo>')
+def arquivos_estaticos(nome_arquivo):
+    return send_from_directory(os.path.dirname(os.path.abspath(__file__)), nome_arquivo)
 CORS(app)  # Permite chamadas de outros domínios, útil se abrir HTML direto
 
 # Substitua com suas credenciais do Twilio
