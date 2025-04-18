@@ -31,8 +31,10 @@ def enviar_sms():
             from_=TWILIO_PHONE,
             to=MEU_NUMERO
         )
+        print(f"SMS enviado para {MEU_NUMERO} com a mensagem: {mensagem}")
         return jsonify({'status': 'SMS enviado!'}), 200
     except Exception as e:
+        print(f"Erro ao enviar SMS: {e}")
         return jsonify({'erro': str(e)}), 500
 
 import os
