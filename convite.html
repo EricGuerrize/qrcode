@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Convite Especial 💖</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ffb6c1, #ffe4e1);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #d63384;
+    }
+    button {
+      padding: 10px 25px;
+      margin: 15px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    #sim {
+      background-color: #32CD32;
+      color: white;
+    }
+    #nao {
+      background-color: #FF6347;
+      color: white;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <h1>Quer sair pra jantar comigo? 💕</h1>
+  <div>
+    <button id="sim">Sim!</button>
+    <button id="nao">Não</button>
+  </div>
+
+  <script>
+    const btnNao = document.getElementById('nao');
+    const btnSim = document.getElementById('sim');
+
+    btnNao.addEventListener('mouseover', () => {
+      btnNao.style.position = 'absolute';
+      btnNao.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+      btnNao.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+    });
+
+    btnSim.addEventListener('click', () => {
+      window.location.href = 'confirmado.html';
+    });
+  </script>
+</body>
+</html>

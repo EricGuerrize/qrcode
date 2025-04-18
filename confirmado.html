@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Date Confirmado 💖</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #ffdee9, #b5fffc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #d6336c;
+      margin-bottom: 1rem;
+      animation: pulse 1s infinite;
+    }
+
+    p, label, select, button, a {
+      font-size: 1.2rem;
+      color: #444;
+      margin: 5px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      p, label, select, button, a {
+        font-size: 1rem;
+      }
+    }
+
+    #play-music {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <audio id="musica-romantica" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    Seu navegador não suporta áudio.
+  </audio>
+  <button id="play-music" onclick="document.getElementById('musica-romantica').play(); this.style.display='none';">Ativar Música 🎵</button>
+
+  <h1>Date confirmado! 😍</h1>
+  <p>Te vejo mais tarde ❤️</p>
+
+  <p><strong>Local:</strong> 
+    <a href="https://maps.apple.com/place?address=Rua%20C%C3%A2ndido%20Mariano,%20Centro%20Norte,%20Cuiab%C3%A1%20MT,%2078005-150,%20Brazil&coordinate=-15.593760,-56.099420&name=R.%20C%C3%A2ndido%20Mariano,%20764%20Cuiab%C3%A1,%20Brazil&map=explore" 
+       target="_blank">
+      Olga - Rua Cândido Mariano, 764, Cuiabá 📍
+    </a>
+  </p>
+
+  <label for="horario"><strong>Escolha o horário:</strong></label>
+  <select id="horario">
+    <option value="18h">18:00</option>
+    <option value="19h">19:00</option>
+    <option value="20h">20:00</option>
+    <option value="21h">21:00</option>
+  </select>
+
+  <br><br>
+  <button onclick="confirmarHorario()">Confirmar horário</button>
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    const duration = 5 * 1000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+      confetti({
+        particleCount: 5,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 }
+      });
+      confetti({
+        particleCount: 5,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 }
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    }());
+
+    function confirmarHorario() {
+      const horario = document.getElementById('horario').value;
+      fetch('/enviar-sms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ horario })
+      }).then(() => {
+        alert('Encontro confirmado para ' + horario + '! 💌');
+      }).catch(err => {
+        console.error('Erro ao enviar SMS:', err);
+      });
+    }
+  </script>
+</body>
+</html>
