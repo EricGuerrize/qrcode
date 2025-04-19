@@ -2,32 +2,36 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Date Confirmado 💖</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
+      padding: 20px;
       background: linear-gradient(to bottom right, #ffdee9, #b5fffc);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       flex-direction: column;
       font-family: 'Arial', sans-serif;
-      overflow: hidden;
+      text-align: center;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 90%;
     }
 
     h1 {
-      font-size: 3rem;
+      font-size: 2.5rem;
       color: #d6336c;
       margin-bottom: 1rem;
       animation: pulse 1s infinite;
-    }
-
-    p, label, select, button, a {
-      font-size: 1.2rem;
-      color: #444;
-      margin: 5px;
     }
 
     @keyframes pulse {
@@ -36,12 +40,39 @@
       100% { transform: scale(1); }
     }
 
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 999;
+    p, label, select, button, a {
+      font-size: 1.2rem;
+      color: #444;
+      margin: 10px 0;
+    }
+
+    select, button {
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    button {
+      background-color: #d6336c;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #c2255c;
+      transform: scale(1.05);
+    }
+
+    a {
+      color: #d6336c;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
 
     @media (max-width: 600px) {
@@ -52,53 +83,41 @@
       p, label, select, button, a {
         font-size: 1rem;
       }
-    }
-
-    #play-music {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background-color: #ff69b4;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-      cursor: pointer;
+      
+      .container {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <audio id="musica-romantica" loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
-    Seu navegador não suporta áudio.
-  </audio>
-  <button id="play-music" onclick="document.getElementById('musica-romantica').play(); this.style.display='none';">Ativar Música 🎵</button>
+  <div class="container">
+    <h1>Date confirmado! 😍</h1>
+    <p>Te vejo mais tarde ❤️</p>
 
-  <h1>Date confirmado! 😍</h1>
-  <p>Te vejo mais tarde ❤️</p>
+    <p><strong>Local:</strong> 
+      <a href="https://maps.apple.com/place?address=Rua%20C%C3%A2ndido%20Mariano,%20Centro%20Norte,%20Cuiab%C3%A1%20MT,%2078005-150,%20Brazil&coordinate=-15.593760,-56.099420&name=R.%20C%C3%A2ndido%20Mariano,%20764%20Cuiab%C3%A1,%20Brazil&map=explore" 
+         target="_blank">
+        Olga - Rua Cândido Mariano, 764, Cuiabá 📍
+      </a>
+    </p>
 
-  <p><strong>Local:</strong> 
-    <a href="https://maps.apple.com/place?address=Rua%20C%C3%A2ndido%20Mariano,%20Centro%20Norte,%20Cuiab%C3%A1%20MT,%2078005-150,%20Brazil&coordinate=-15.593760,-56.099420&name=R.%20C%C3%A2ndido%20Mariano,%20764%20Cuiab%C3%A1,%20Brazil&map=explore" 
-       target="_blank">
-      Olga - Rua Cândido Mariano, 764, Cuiabá 📍
-    </a>
-  </p>
+    <label for="horario"><strong>Escolha o horário:</strong></label>
+    <select id="horario">
+      <option value="18h">18:00</option>
+      <option value="19h" selected>19:00</option>
+      <option value="20h">20:00</option>
+      <option value="21h">21:00</option>
+    </select>
 
-  <label for="horario"><strong>Escolha o horário:</strong></label>
-  <select id="horario">
-    <option value="18h">18:00</option>
-    <option value="19h">19:00</option>
-    <option value="20h">20:00</option>
-    <option value="21h">21:00</option>
-  </select>
-
-  <br><br>
-  <button onclick="confirmarHorario()">Confirmar horário</button>
-
-  <canvas id="confetti-canvas"></canvas>
+    <br><br>
+    <button onclick="confirmarHorario()">Confirmar horário</button>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
-    const duration = 5 * 1000;
+    // Confetti animation
+    const duration = 3 * 1000;
     const end = Date.now() + duration;
 
     (function frame() {
@@ -122,14 +141,13 @@
 
     function confirmarHorario() {
       const horario = document.getElementById('horario').value;
-      fetch('/enviar-sms', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ horario })
-      }).then(() => {
-        alert('Encontro confirmado para ' + horario + '! 💌');
-      }).catch(err => {
-        console.error('Erro ao enviar SMS:', err);
+      alert('Encontro confirmado para ' + horario + '! 💌');
+      
+      // More confetti celebration
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
       });
     }
   </script>
