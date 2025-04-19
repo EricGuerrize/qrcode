@@ -1,39 +1,54 @@
-from flask import Flask, request, jsonify
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-import os
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Convite 💌</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #fff0f5, #e0ffff);
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #e91e63;
+      font-size: 2rem;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #sim-btn {
+      background-color: #4caf50;
+      color: white;
+    }
+    #nao-btn {
+      background-color: #f44336;
+      color: white;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
 
-app = Flask(__name__)
+  <h1>Você aceita ir a um date comigo? 💖</h1>
 
-@app.route("/enviar-sms", methods=["POST"])
-def enviar_sms():
-    dados = request.get_json()
-    horario = dados.get('horario', 'horário indefinido')
-    mensagem = f"🌹 Convite confirmado! Te espero no Olga às {horario}. 💌"
+  <button id="sim-btn" onclick="window.location.href='confirmado.html'">Sim 😍</button>
+  <button id="nao-btn" onmouseover="fugir()" onclick="fugir()">Não 🙈</button>
 
-    remetente = 'guerrizeeric@gmail.com'
-    senha = 'gkdbnnebsqqutoqs'
-    destinatario = 'guerrizeeric@gmail.com'
+  <script>
+    function fugir() {
+      const btn = document.getElementById('nao-btn');
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 50);
+      btn.style.left = `${x}px`;
+      btn.style.top = `${y}px`;
+    }
+  </script>
 
-    msg = MIMEMultipart()
-    msg['From'] = remetente
-    msg['To'] = destinatario
-    msg['Subject'] = 'Confirmação de Date ❤️'
-    msg.attach(MIMEText(mensagem, 'plain'))
-
-    try:
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as servidor:
-            servidor.login(remetente, senha)
-            servidor.sendmail(remetente, destinatario, msg.as_string())
-        print(f"E-mail enviado para {destinatario}")
-        return jsonify({'status': 'E-mail enviado!'}), 200
-    except Exception as e:
-        print(f"Erro ao enviar e-mail: {e}")
-        return jsonify({'erro': str(e)}), 500
-
-if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
-
-    #teste
+</body>
+</html>
