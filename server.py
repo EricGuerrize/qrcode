@@ -11,6 +11,7 @@ load_dotenv()
 app = Flask(__name__)
 
 @app.route("/")
+@app.route("/convite")
 def convite():
     return render_template('convite.html')
 
