@@ -53,20 +53,11 @@
       box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
     }
 
-    #sim-btn:hover {
-      background-color: #3e8e41;
-      transform: scale(1.05);
-    }
-
     #nao-btn {
       background-color: #f44336;
       color: white;
       position: absolute;
       box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
-    }
-
-    #nao-btn:hover {
-      background-color: #d32f2f;
     }
 
     @media (max-width: 600px) {
@@ -81,3 +72,41 @@
     }
   </style>
 </head>
+<body>
+  <div class="container">
+    <h1>Você aceita ir a um date comigo? 💖</h1>
+    
+    <div class="btn-group">
+      <button id="sim-btn" onclick="window.location.href='confirmado.html'">Sim 😍</button>
+      <button id="nao-btn" onmouseover="fugir()" onclick="fugir()">Não 🙈</button>
+    </div>
+  </div>
+
+  <script>
+    function fugir() {
+      const btn = document.getElementById('nao-btn');
+      const container = document.querySelector('.btn-group');
+      const containerRect = container.getBoundingClientRect();
+      
+      // Calcula posição aleatória dentro do container dos botões
+      const maxX = containerRect.width - btn.offsetWidth;
+      const maxY = containerRect.height - btn.offsetHeight;
+      
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+      
+      btn.style.left = `${x}px`;
+      btn.style.top = `${y}px`;
+      
+      // Efeito de clique
+      btn.style.transform = 'scale(0.9)';
+      setTimeout(() => {
+        btn.style.transform = 'scale(1)';
+      }, 100);
+    }
+    
+    // Posiciona o botão "Não" aleatoriamente ao carregar
+    window.onload = fugir;
+  </script>
+</body>
+</html>
