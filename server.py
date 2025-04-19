@@ -28,8 +28,8 @@ def enviar_sms():
     try:
         client.messages.create(
             body=mensagem,
-            from_=TWILIO_PHONE,
-            to=MEU_NUMERO
+            from_='whatsapp:+14155238886',
+            to='whatsapp:+5565992556938'
         )
         print(f"SMS enviado para {MEU_NUMERO} com a mensagem: {mensagem}")
         return jsonify({'status': 'SMS enviado!'}), 200
