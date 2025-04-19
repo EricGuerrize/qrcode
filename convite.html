@@ -1,63 +1,31 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Convite Especial 💖</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #ffb6c1, #ffe4e1);
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-    h1 {
-      font-size: 2.5rem;
-      color: #d63384;
-    }
-    button {
-      padding: 10px 25px;
-      margin: 15px;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    #sim {
-      background-color: #32CD32;
-      color: white;
-    }
-    #nao {
-      background-color: #FF6347;
-      color: white;
-      position: relative;
-    }
-  </style>
-</head>
-<body>
-  <h1>Aceita sair pra jantar comigo? 💕</h1>
-  <div>
-    <button id="sim">Sim!</button>
-    <button id="nao">Não 😭</button>
-  </div>
+<audio id="musica-romantica" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  Seu navegador não suporta áudio.
+</audio>
+<button id="play-music" onclick="document.getElementById('musica-romantica').play(); this.style.display='none'; document.getElementById('pause-music').style.display='inline-block';">Iniciar Música 🎵</button>
+<button id="pause-music" onclick="document.getElementById('musica-romantica').pause(); this.style.display='none'; document.getElementById('play-music').style.display='inline-block';">Parar Música ⏸️</button>
+<script>
+  document.getElementById('pause-music').style.display = 'none';
 
-  <script>
-    const btnNao = document.getElementById('nao');
-    const btnSim = document.getElementById('sim');
+  document.getElementById('play-music').addEventListener('click', function () {
+    document.getElementById('musica-romantica').play();
+    this.style.display = 'none';
+    document.getElementById('pause-music').style.display = 'inline-block';
+  });
+</script>
+<style>
+  #play-music, #pause-music {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
 
-    btnNao.addEventListener('mouseover', () => {
-      btnNao.style.position = 'absolute';
-      btnNao.style.top = Math.random() * (window.innerHeight - 50) + 'px';
-      btnNao.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-    });
-
-    btnSim.addEventListener('click', () => {
-      window.location.href = 'confirmado.html';
-    });
-  </script>
-</body>
-</html>
+  #pause-music {
+    background-color: #6c757d;
+  }
+</style>
