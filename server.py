@@ -1,47 +1,56 @@
-from flask import Flask, request, jsonify
-from twilio.rest import Client
-from flask_cors import CORS
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Convite Especial 💌</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #f9f3ff, #d0f0ff);
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 2rem;
+      color: #d63384;
+    }
+    #nao-btn {
+      position: absolute;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 20px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+    }
+    #sim-btn {
+      background-color: #28a745;
+      color: white;
+    }
+    #nao-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+  </style>
+</head>
+<body>
 
-app = Flask(__name__)
-from flask import send_from_directory
-import os
+  <h1>Você aceita ir a um date comigo? 💖</h1>
 
-@app.route('/<path:nome_arquivo>')
-def arquivos_estaticos(nome_arquivo):
-    return send_from_directory(os.path.dirname(os.path.abspath(__file__)), nome_arquivo)
-CORS(app)  # Permite chamadas de outros domínios, útil se abrir HTML direto
+  <button id="sim-btn" onclick="window.location.href='confirmado.html'">Sim 😍</button>
+  <button id="nao-btn" onmouseover="fugir()" onclick="fugir()">Não 🙈</button>
 
-# Substitua com suas credenciais do Twilio
-TWILIO_SID = 'SAC7aeea0374f704aeadcbda96e21fe3a0f'
-TWILIO_AUTH_TOKEN = 'Sf2a84e6a5501aab31f4be875cd383f8d'
-TWILIO_PHONE = '+12403262948'  # Número fornecido pelo Twilio
-MEU_NUMERO = '+5565992556938'    # Seu número real para receber o SMS
+  <script>
+    function fugir() {
+      const btn = document.getElementById('nao-btn');
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 50);
+      btn.style.left = `${x}px`;
+      btn.style.top = `${y}px`;
+    }
+  </script>
 
-client = Client(TWILIO_SID, TWILIO_AUTH_TOKEN)
-
-@app.route('/enviar-sms', methods=['POST'])
-def enviar_sms():
-    dados = request.get_json()
-    horario = dados.get('horario', 'horário indefinido')
-    mensagem = f"🌹 Convite confirmado! Te espero no Olga às {horario}. ❤️"
-
-    try:
-        resposta = client.messages.create(
-            body=mensagem,
-            from_='whatsapp:+14155238886',
-            to='whatsapp:+5565992556938'
-        )
-        print(f"Mensagem enviada para {resposta.to}")
-        print(f"SID: {resposta.sid}")
-        print(f"Status: {resposta.status}")
-        print(f"Mensagem: {mensagem}")
-        return jsonify({'status': 'SMS enviado!'}), 200
-    except Exception as e:
-        print(f"Erro ao enviar SMS: {e}")
-        return jsonify({'erro': str(e)}), 500
-
-import os
-
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+</body>
+</html>
