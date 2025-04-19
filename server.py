@@ -26,12 +26,15 @@ def enviar_sms():
     mensagem = f"🌹 Convite confirmado! Te espero no Olga às {horario}. ❤️"
 
     try:
-        client.messages.create(
+        resposta = client.messages.create(
             body=mensagem,
             from_='whatsapp:+14155238886',
             to='whatsapp:+5565992556938'
         )
-        print(f"SMS enviado para {MEU_NUMERO} com a mensagem: {mensagem}")
+        print(f"Mensagem enviada para {resposta.to}")
+        print(f"SID: {resposta.sid}")
+        print(f"Status: {resposta.status}")
+        print(f"Mensagem: {mensagem}")
         return jsonify({'status': 'SMS enviado!'}), 200
     except Exception as e:
         print(f"Erro ao enviar SMS: {e}")
